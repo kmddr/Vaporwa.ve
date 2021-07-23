@@ -13,7 +13,7 @@ const options = yargs
  .option("count", {
    describe: "How many tracks to generate",
    type: "number",
-   default: "Math.floor(Math.random() * 14)",
+   default: "random",
  })
  .option("m", { 
     alias: "mode", 
@@ -23,11 +23,16 @@ const options = yargs
   })
  .argv;
 
+ console.log(options.m);
 switch ( options.m ) {
-  case "c" || "cover" || "covers":
-    require("../bin/covers.js");
+  case "a" || "all":
+    require("index.js");
+    console.log("x");
     break;
-  case "t" || "tracks" || "track":
-    
+  case "c" || "cover" || "covers":
+    _generateCover(options.p);
+    break;
+  case "t" || "track" || "tracks":
+    _generateTracks(options.p, options.count);
     break;
 }

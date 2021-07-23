@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
-const _cmd = require('../commands/test.js');
-// const tracknames = require("./names.js");
-const translation = require("./translate_test.js");
+// Connect everything together
+let names = require('./names');
+let covers = require('./covers');
+
+console.log(names, covers);

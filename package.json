@@ -26,12 +26,10 @@
   "license": "ISC",
   "bin": {
     "vaporwa-ve": "./commands/root.js",
-    "vaw"       : "./commands/root.js",
-    "va"        : "./commands/root.js",
-
+    "vaw": "./commands/root.js",
+    "va": "./commands/root.js",
     "vapor-test": "./commands/test.js",
-    "vapor-run" : "./commands/run.js",
-
-    "covers"    : "./bin/covers.js"
+    "vapor-run": "./commands/run.js",
+    "covers": "./bin/covers.js"
   }
 }
