@@ -1,13 +1,17 @@
-//CONFIG (if the aspect ratio isnt 1:1 then you smell bruh)
+#!/usr/bin/env node
 
+//CONFIG (if the aspect ratio isnt 1:1 then you smell bruh)
 const ART_WIDTH = 1400;
 const ART_HEIGHT = 1400;
 
-// get stuff (wow thanks ethan this comment is very useful)
+// Initialize File System & the Canvas library
 const fs = require("fs");
 const canvas = require("canvas");
 
-// assets will be where the actual assets get stored (e.g. assets.statues.Helios.png), paths will be the config for the different objects
+// assets will be where the actual assets get stored (e.g. assets.statues.Helios.png)
+// paths will be the config for the different objects
+// What the hell does this mean
+
 let assets = {
   floor: "../images/floor.png", // Checkerboard floor
 };
@@ -28,6 +32,7 @@ Object.keys(paths).forEach(currentAssetType => {
 
   // we must now scan each directory for usable shit and store that
   fs.readdirSync(testFolder).forEach(file => {
-    console.log(file);
+    console.log(currentAssetType + ": " + file);
+    
   });
 });

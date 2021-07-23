@@ -1,6 +1,6 @@
 {
   "name": "vaporwa.ve",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Automated Vaporwave",
   "main": "bin/index.js",
   "dependencies": {
@@ -25,7 +25,13 @@
   "author": "kmddr & ethan pixelate",
   "license": "ISC",
   "bin": {
+    "vaporwa-ve": "./commands/root.js",
+    "vaw"       : "./commands/root.js",
+    "va"        : "./commands/root.js",
+
     "vapor-test": "./commands/test.js",
-    "vapor-run":  "./commands/run.js"
+    "vapor-run" : "./commands/run.js",
+
+    "covers"    : "./bin/covers.js"
   }
 }
