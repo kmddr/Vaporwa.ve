@@ -57,5 +57,11 @@
     "PLEASURE",
     "LOVE",
     "BROADCAST"
+  ],
+  "audiodata": [
+    [ "Amen Break", "percussive", 187, 4, 4         ],
+    [ 1,            "percussive", 120, 3, 4         ],
+    [ 2,            "melodic",    187, 4, 4, "Fmaj" ],
+    [ 3,            "melodic",    87,  4, 4, "Gmin" ]
   ]
 }
