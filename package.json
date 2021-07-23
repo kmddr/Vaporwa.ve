@@ -25,6 +25,7 @@
   "author": "kmddr & ethan pixelate",
   "license": "ISC",
   "bin": {
-    "run": "./commands/run.js"
+    "vapor-test": "./commands/test.js",
+    "vapor-run":  "./commands/run.js"
   }
 }

@@ -1,5 +1,5 @@
 
 // Make sure scripts run
-require("../names.js");
-require("../covers.js");
+require("../bin/names.js");
+require("../bin/covers.js");
 require("../audio.js");
