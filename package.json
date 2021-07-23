@@ -1,0 +1,28 @@
+{
+  "name": "vaporwa.ve",
+  "version": "0.0.1",
+  "description": "Automated Vaporwave",
+  "main": "index.js",
+  "dependencies": {
+    "canvas": "^2.8.0",
+    "random-words": "^1.1.1",
+    "request": "^2.88.2",
+    "translate": "^1.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vaporwave",
+    "vaporwa.ve",
+    "automated",
+    "vaporwave",
+    "bandcamp",
+    "soundcloud",
+    "translate",
+    "api"
+  ],
+  "author": "kmddr",
+  "license": "ISC"
+}
