@@ -1,8 +1,8 @@
 {
   "name": "vaporwa.ve",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Automated Vaporwave",
-  "main": "index.js",
+  "main": "bin/index.js",
   "dependencies": {
     "canvas": "^2.8.0",
     "random-words": "^1.1.1",
@@ -23,6 +23,9 @@
     "translate",
     "api"
   ],
-  "author": "kmddr",
-  "license": "ISC"
+  "author": "kmddr & ethan pixelate",
+  "license": "ISC",
+  "bin": {
+    "index": "./index.js"
+  }
 }
