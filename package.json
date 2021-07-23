@@ -16,16 +16,15 @@
   "keywords": [
     "vaporwave",
     "vaporwa.ve",
-    "automated",
+    "automated vaporwave",
     "vaporwave",
     "bandcamp",
     "soundcloud",
-    "translate",
     "api"
   ],
   "author": "kmddr & ethan pixelate",
   "license": "ISC",
   "bin": {
-    "index": "./index.js"
+    "run": "./commands/run.js"
   }
 }
