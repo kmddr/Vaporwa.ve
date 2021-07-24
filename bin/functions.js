@@ -38,10 +38,26 @@ function _appendImages(paths, ctx, _canvas) {
   }
 };
 
+function convertToFullwidth(text) {
+  // Written by tiskolin
+	var output = "";
+	for (i = 0; i < text.length; i++) {
+		if (text[i] >= '!' && text[i] <= '~') { // Check whether character is latin
+			output += String.fromCharCode(text.charCodeAt(i) - 0x20 + 0xff00); // Convert to fullwidth
+		} else if (text[i] == " ") { // Check if character is space
+			output += "　"; // Convert to fullwidth space
+		} else {
+			output += text[i]; // Leave it be
+		}
+	}
+	return output;
+}
+
 module.exports = {
   _appendImages: _appendImages,
   __error: __error,
   _appendText: _appendText,
   rr: rr,
   clamp: clamp,
+  convertToFullwidth: convertToFullwidth,
 }

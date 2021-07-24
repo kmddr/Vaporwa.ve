@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const chalk = require("chalk");
 const yargs = require("yargs");
-
 const options = yargs
  .usage("Usage: -p <path> -m <mode>")
  .option("p", {

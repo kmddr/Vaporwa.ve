@@ -1,10 +1,12 @@
 
 const randomWords = require("random-words");
+const { convertToFullwidth } = require("../bin/functions");
+
 // Generate artist name
 let ARTIST_NAME = "MAC";
-for ( let x = 0; x < 4; x++ ) { ARTIST_NAME += String.fromCharCode(0x30A0 + Math.random() * (0x30FF-0x30A0+1)); }
+for ( let x = 0; x < 4; x++ ) { ARTIST_NAME += String.fromCharCode(0x30A0 + Math.random() * (0x30FF-0x30A0+1)); } ARTIST_NAME = convertToFullwidth(ARTIST_NAME);
 // Generate album name
-let ALBUM_NAME = randomWords().toUpperCase() + " SHOPPE";
+let ALBUM_NAME = convertToFullwidth(randomWords().toUpperCase() + " SHOPPE");
 // Generate track names
 let tracks = Array(10);
 for ( let k = 0; k < tracks.length; k++ ) {
@@ -25,8 +27,9 @@ for ( let k = 0; k < tracks.length; k++ ) {
   // Append snippet to random character
   let y = tracks[k];
   let x = Math.floor(Math.random() * y.length);
-  y = y.substring(0, x) + entry + y.substring(x, y.length);
+  y = y.substring(0, x) + convertToFullwidth(entry) + y.substring(x, y.length);
   tracks[k] = y;
+  console.log(tracks[k])
 };
 let NAMES = [ ARTIST_NAME, ALBUM_NAME, tracks ];
 module.exports = NAMES;

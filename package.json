@@ -1,6 +1,6 @@
 {
   "name": "vaporwa.ve",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Automated Vaporwave",
   "main": "bin/index.js",
   "dependencies": {
@@ -28,6 +28,6 @@
     "va": "./commands/root.js",
     "vapor-test": "./commands/test.js",
     "vapor-run": "./commands/run.js",
-    "covers": "./bin/covers.js"
+    "cover": "./bin/covers.js"
   }
 }
