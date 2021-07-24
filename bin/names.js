@@ -1,23 +1,10 @@
 
-/*
-const randomWords = require('random-words');
-let words = randomWords(5);
-
-const translate = require('translate');
-translate.engine = "libre";
-
-for ( var i = 0; i < words.length; i++ ) {
-  // Loop thru, then translate to Japanese
-  words[i] = translate(words[i], "ja");
-}
-chars = words.join(" ");
-*/
+const randomWords = require("random-words");
 // Generate artist name
 let ARTIST_NAME = "MAC";
 for ( let x = 0; x < 4; x++ ) { ARTIST_NAME += String.fromCharCode(0x30A0 + Math.random() * (0x30FF-0x30A0+1)); }
 // Generate album name
-let ALBUM_NAME = "";
-for ( let x = 0; x < 4; x++ ) { ALBUM_NAME += String.fromCharCode(0x30A0 + Math.random() * (0x30FF-0x30A0+1)); } ALBUM_NAME += "SHOPPE";
+let ALBUM_NAME = randomWords().toUpperCase() + " SHOPPE";
 // Generate track names
 let tracks = Array(10);
 for ( let k = 0; k < tracks.length; k++ ) {

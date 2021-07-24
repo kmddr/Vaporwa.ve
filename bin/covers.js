@@ -1,61 +1,88 @@
 #!/usr/bin/env node
 // 2021 Vaporwa.ve
 
+const yargs = require("yargs");
+
+const options = yargs
+  .usage("Usage: -hex <hex code> -ids <list> -albumname <name>")
+  .example("covers --hex ffa3c7", "Creates a cover with a background of #ffa3c7")
+  .example("covers --ids 362", "Creates a cover with the first painting, the sixth addon, and the second statue")
+  .example("covers --ids ?1?", "Creates a cover with the first addon")
+  .example("covers --an \"FLORAL SHOPPE\"", "Creates a cover with a title of \"FLORAL SHOPPE\"")
+  .option("hex", {
+    alias: "h",
+    describe: "The hex code of a background. Don't include the hashtag.",
+    type: "string",
+  })
+  .option("ids", {
+    alias: "i",
+    describe: "The IDs used for the images (such as statues)",
+    type: "string",
+  })
+  .option("albumname", {
+    alias: "an",
+    describe: "The name of the album. Used on the cover",
+    type: "string",
+  })
+  .argv;
+
+// console.log("test:" + options.hex, options.ids, options.albumname);
+
+// Generate the image
+
 const SIZE = 1400;
 
 const fs = require("fs");
 const { createCanvas, loadImage } = require("canvas");
 const chalk = require("chalk");
 const _names = require("./names.js");
+const { __error, _appendImages, _appendText } = require("./functions.js");
 
-// canvas bullcrap go here lol
+// Canvas init
 let _canvas = createCanvas(SIZE, SIZE);
 let ctx = _canvas.getContext("2d");
 
 // Get how many files are in each dir
-let folders = [ "etc", "paintings", "statues" ];
-let lengths = [];
-let images = [];
+let folders = [ "paintings", "etc", "statues"];
+let lengths = []; let images = [];
+let ids; (options.ids !== undefined) ? ids = options.ids.split("") : ids = ids;
+let id; let _errorRan;
 for ( var i = 0; i < 3; i++ ) {
   let dir = "./images/" + folders[i];
   let len = fs.readdirSync(dir).length;
   lengths[i] = len;
-  images[i] = dir + "/" + (Math.floor(Math.random() * len) + 1) + ".png";
+  // Is the ID valid?
+  id = (Math.floor(Math.random() * len) + 1)
+  if ( ids !== undefined && ids[i] !== "?" ) {
+    if ( ids[i] <= len && ids[i] !== "0" ) {
+      id = ids[i];
+    } else if ( !_errorRan ) { __error(2, "Invalid ID\nProceeding with random ID", "covers.js"); _errorRan = true; };
+  };
+  images[i] = dir + "/" + id + ".png";
 }
-console.log(folders, lengths, images);
 
 // random bg
-let col = `#${Math.floor(Math.random()*16777215).toString(16)}`;
-console.log(chalk.gray("[1/7] ") + chalk.green("Generating background... ") + chalk.gray(`[${col}]`));
+// Has the user input a valid hex code?
+console.log(options.hex);
+if ( options.hex !== undefined && options.hex == /([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/g ) { 
+  options.hex = undefined; __error(1, "Invalid hex code\nProceeding with random hex code", "covers.js"); 
+}
+let col; (options.hex == undefined) ? col = `#${Math.floor(Math.random()*16777215).toString(16)}` : col = `#${options.hex}`;
+console.log(chalk.gray("[1/1] ") + chalk.green("Generating background... ") + chalk.gray(`[${col}]`));
 ctx.fillStyle = col;
 ctx.fillRect(0, 0, SIZE, SIZE);
-// Add floor
-console.log(chalk.gray("[2/7] ") + chalk.green("Generating floor... ") + chalk.gray("./images/floor.png"));
-loadImage('./images/floor.png').then(image => { ctx.drawImage(image, 0, 0, 1400, 1400); });
-// Add painting
-console.log(chalk.gray("[3/7] ") + chalk.green("Generating painting... ") + chalk.gray(images[1]));
-loadImage(images[1]).then(image => { ctx.drawImage(image, 0, 0, 1400, 1400); });
-// Add emblem
-console.log(chalk.gray("[4/7] ") + chalk.green("Generating emblem... ") + chalk.gray("./images/emblem.png"));
-loadImage("./images/emblem.png").then(image => { ctx.drawImage(image, 0, 0, 1400, 1400); });
-// Add text
-console.log(chalk.gray("[5/7] ") + chalk.green("Generating text... ") + chalk.gray(_names[0]));
-ctx.font = "72pt Arial Condensed";
-ctx.textAlign = "left"
-ctx.fillStyle = "#fff";
-ctx.fillText(_names[0], 740, 165 + 72, 400);
-loadImage("./images/line.png").then(image => { ctx.drawImage(image, 0, 0, 1400, 1400); });
-// Add text
-console.log(chalk.gray("[6/7] ") + chalk.green("Generating text... ") + chalk.gray(_names[1]));
-ctx.font = "56pt Arial Condensed";
-ctx.textAlign = "left"
-ctx.fillStyle = "#fff";
-ctx.fillText(_names[1], 750, 300 + 56, 600);
-// Add statue
-console.log(chalk.gray("[7/7] ") + chalk.green("Generating statue... ") + chalk.gray(images[2]));
-loadImage(images[2]).then(image => {
-  ctx.drawImage(image, 0, 0, 1400, 1400);
-  // Save
-  const buffer = _canvas.toBuffer('image/png')
-  fs.writeFileSync(`./images/exports/1.png`, buffer);
-});
+
+// Is the background too dark or too light? Code by Pointy, Modified by KMDDR
+col = col.substring(1);  // strip #
+var rgb = parseInt(col, 16);   // convert rrggbb to decimal
+var luma = rgb * 0.0622710623; // convert 4096 (max) to 255 (max)
+console.log(rgb, luma);
+
+let paths = [ `./images/floor_${luma > 40}.png`, "./images/emblem.png", `./images/line_${luma < 40}.png`];
+paths = paths.concat(images);
+let textInfo = [ [ _names[0], 72, 740, 165, 400 ], [ _names[1], 56, 750, 300, 600 ], /* <- This one */ ];
+// Append stuffs
+_appendImages(paths, ctx, _canvas);
+_appendText(textInfo, ctx, luma);
+// Final save
+fs.writeFileSync(`./images/exports/1.png`, _canvas.toBuffer('image/png'));
