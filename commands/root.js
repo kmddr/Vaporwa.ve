@@ -23,14 +23,13 @@ const options = yargs
   })
  .argv;
 
- console.log(options.m);
 switch ( options.m ) {
   case "a" || "all":
     require("index.js");
     console.log("x");
     break;
   case "c" || "cover" || "covers":
-    _generateCover(options.p);
+    require("../bin/covers");
     break;
   case "t" || "track" || "tracks":
     _generateTracks(options.p, options.count);
